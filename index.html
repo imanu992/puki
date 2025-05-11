@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUKI - Buon Compleanno!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+						
+        }
+        
+        body {
+            background-color: #181818;
+            color: #fafafa;
+            overflow-x: hidden;
+        }
+        
+        .header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pink-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.7;
+            z-index: -1;
+        }
+        
+        .blob1 {
+            background: #ff69b4;
+            width: 300px;
+            height: 300px;
+            top: -100px;
+            left: -100px;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .blob2 {
+            background: #ff1493;
+            width: 250px;
+            height: 250px;
+            bottom: -50px;
+            right: -50px;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+        
+        .blob3 {
+            background: #ff007f;
+            width: 200px;
+            height: 200px;
+            bottom: 100px;
+            left: 50px;
+            animation: float 12s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translate(0px, 0px) rotate(0deg); }
+            25% { transform: translate(20px, 15px) rotate(5deg); }
+            50% { transform: translate(0px, 25px) rotate(0deg); }
+            75% { transform: translate(-20px, 15px) rotate(-5deg); }
+            100% { transform: translate(0px, 0px) rotate(0deg); }
+        }
+        
+        .title {
+            font-size: 7rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            background: linear-gradient(-45deg, #ff69b4, #ff1493, #ff007f);
+            background-size: 300% 300%;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: gradient 6s ease infinite;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50% }
+            50% { background-position: 100% 50% }
+            100% { background-position: 0% 50% }
+        }
+        
+        .subtitle {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: #fafafa;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1s ease forwards 0.5s;
+        }
+        
+        .birthday-text {
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 40px;
+            max-width: 600px;
+            padding: 0 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1s ease forwards 0.8s;
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #ff69b4;
+            opacity: 0;
+        }
+        
+        section {
+            min-height: 100vh;
+            padding: 80px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease;
+        }
+        
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: #ff1493;
+            text-align: center;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+        
+        .memory-card {
+            background: transparent;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(255, 105, 180, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .memory-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(255, 105, 180, 0.3);
+        }
+        
+        .memory-img {
+            width: 100%;
+            height: 200px;
+            background-color: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ff1493;
+            font-weight: bold;
+        }
+				
+				.memory-img img {
+					max-width: 110%;
+				  max-height: 110%;
+				  object-fit: contain;
+					transform: scale(1.4);
+					z-index: -1;
+				}
+        
+        .memory-text {
+            padding: 20px;
+        }
+        
+        .memory-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #ff1493;
+        }
+        
+        .memory-desc {
+            color: #fafafa;
+            line-height: 1.6;
+        }
+        
+        .wishes {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .wish {
+            margin-bottom: 30px;
+						border-radius: 15px;
+            padding: 20px;
+/* From https://css.glass */
+background: rgba(255, 255, 255, 0.1);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(20px);
+-webkit-backdrop-filter: blur(20px);
+border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .wish-text {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .wish-author {
+            font-weight: bold;
+            color: #ff1493;
+        }
+        
+        footer {
+            padding: 30px;
+            text-align: center;
+            background: linear-gradient(to right, #ff69b4, #ff1493);
+            color: white;
+        }
+        
+        .heart {
+            color: #ff007f;
+            display: inline-block;
+            animation: pulse 1.5s ease infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+        
+        @media (max-width: 768px) {
+            .title {
+                font-size: 5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.5rem;
+            }
+            
+            .birthday-text {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .title {
+                font-size: 4rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="pink-blob blob1"></div>
+        <div class="pink-blob blob2"></div>
+        <div class="pink-blob blob3"></div>
+        
+        <h1 class="title">PUKIIII</h1>
+        <h2 class="subtitle">SEI LA MIA VITA</h2>
+        <p class="birthday-text">Buon compleanno patatina mia, sei tutta la mia vita, la mia persona preferita😭</p>
+    </div>
+    
+    <section id="celebration">
+        <h2 class="section-title">Oggi fai 22 anni...</h2>
+        <div class="wishes">
+            <div class="wish">
+                <p class="wish-text">Non è da me farti gli auguri con <span style="color: #ff1493;" id="orario"></span> di ritardo, mi sento una grande merda solo per questo... però ho voluto creare questo piccolo regalo a modo mio, non so se ti piacerà ma spero che tu possa apprezzare l'impegno che ci ho messo🥹... Mai mi dimenticherò il tuo compleanno, e mai me lo sono dimenticato da quando ti conosco...</p>
+                <p class="wish-author">Ti amo</p>
+            </div>
+            <div class="wish">
+                <p class="wish-text">Oggi la domanda del giorno te la faccio qua, <span style="color: #ff1493;">Sta sera vieni voc?</span> mi manchi troppo, ho bisogno di sentirti... Tra qualche giorno non ci sentiremo più come oggi, e questa cosa mi rattrista molto😭</p>
+                <p class="wish-author">Sappi che manchi molto</p>
+            </div>
+        </div>
+    </section>
+    
+    <section id="memories">
+        <h2 class="section-title">Ricordi Speciali</h2>
+        <div class="gallery">
+            <div class="memory-card">
+                <div class="memory-img"><img src="babypuki.jpeg" alt="babypuki" /></div>
+                <div class="memory-text">
+                    <h3 class="memory-title">Guarda com'eri piccola😭</h3>
+                    <p class="memory-desc">Qui non avresti mai pensato che saresti diventata così pukeggiante come oggi...</p>
+                </div>
+            </div>
+            <div class="memory-card">
+                <div class="memory-img"><img src="smaku.png" alt="" /></div>
+                <div class="memory-text">
+                    <h3 class="memory-title">Piccolo Smakussin</h3>
+                    <p class="memory-desc">Le nostre vite sono cambiate da quell'ormai lontano 5 Maggio 2023...</p>
+                </div>
+            </div>
+            <div class="memory-card">
+                <div class="memory-img"><img src="pigs.jpeg" alt="" /></div>
+                <div class="memory-text">
+                    <h3 class="memory-title">Questi siamo io e te</h3>
+                    <p class="memory-desc">Spero che un giorno ci vedremo:( nascere a oltre 500km di distanza da me non è stata una cosa saggia da parte mia...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <p>Il mio cuoricino quando parlo con te -> <span class="heart">❤</span> 
+					<br />per la mia piccola Puki Mary nel giorno del suo 22° compleanno, tvb</p>
+    </footer>
+
+    <script>
+        // Animazioni on-scroll
+        const sections = document.querySelectorAll('section');
+        
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.2
+        };
+        
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+        
+        // Effetto coriandoli
+        function createConfetti() {
+            const confettiColors = ['#ff69b4', '#ff1493', '#ff007f', '#ffcce6'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+                confetti.style.opacity = Math.random() + 0.5;
+                
+                document.body.appendChild(confetti);
+                
+                // Animazione
+                anime({
+                    targets: confetti,
+                    top: '100vh',
+                    left: '+=' + (Math.random() * 200 - 100) + 'px',
+                    rotate: Math.random() * 360,
+                    duration: Math.random() * 3000 + 2000,
+                    delay: Math.random() * 1000,
+                    easing: 'easeInOutQuad',
+                    complete: function() {
+                        confetti.remove();
+                    }
+                });
+            }
+        }
+        
+        // Caricamento della libreria anime.js
+        const script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js';
+        script.onload = function() {
+            // Avvia coriandoli al caricamento e quando si fa click sul titolo
+            createConfetti();
+            document.querySelector('.title').addEventListener('click', createConfetti);
+        };
+        document.head.appendChild(script);
+				
+				// orario aggiornato
+				function aggiornaOrario() {
+    const ora = new Date();
+    const orarioFormattato = ora.toLocaleTimeString('it-IT', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+    document.getElementById('orario').textContent = orarioFormattato;
+  }
+
+  aggiornaOrario(); // mostra l'orario subito al caricamento
+  setInterval(aggiornaOrario, 1000);
+    </script>
+</body>
+</html>
